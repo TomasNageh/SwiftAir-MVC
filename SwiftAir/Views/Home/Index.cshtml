@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftAir Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #c9d6ff 0%, #e2e2e2 100%);
+            min-height: 100vh;
+        }
+
+        .welcome-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .welcome-hero::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><path d="M0,6V0h1000v100L0,6z"></path></svg>');
+                background-size: cover;
+            }
+    </style>
+</head>
+<body>
+    <div class="container-fluid" style="max-width: 1400px;">
+        <div class="welcome-hero rounded-4 p-5 mb-4 shadow position-relative">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-3">Welcome to SwiftAir</h1>
+                    <p class="fs-5 mb-4 opacity-75">
+                        Your comprehensive airline management system. Monitor flights, manage passengers, and streamline operations all in one place.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a class="btn btn-light btn-lg rounded-3 fw-semibold px-4"
+                           asp-area="" asp-controller="Passengers" asp-action="Index">
+                            <i class="bi bi-people-fill me-2"></i>Passengers
+                        </a>
+                        <a class="btn btn-outline-light btn-lg rounded-3 fw-semibold px-4"
+                           asp-area="" asp-controller="Flights" asp-action="Index">
+                            <i class="bi bi-airplane-fill me-2"></i>Flights
+                        </a>
+                    </div>
+
+                </div>
+                <div class="col-lg-4 text-end d-none d-lg-block">
+                    <i class="bi bi-airplane display-1 opacity-25"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

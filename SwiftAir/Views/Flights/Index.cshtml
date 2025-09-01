@@ -1,0 +1,87 @@
+﻿@model IEnumerable<SwiftAir.Models.Flight>
+
+@{
+    ViewData["Title"] = "Flights Management";
+}
+
+<div class="container py-4">
+    <div class="card shadow rounded-4 border-0">
+        <!-- Card Header -->
+        <a asp-controller="Flights" asp-action="Create" class="btn btn-success btn-lg flex-fill rounded-3 fw-semibold gradient-success border-0">
+            <i class="bi bi-airplane-engines-fill me-2"></i>Add Flight
+        </a>
+        <div class="card-header bg-primary text-white d-flex align-items-center justify-content-between rounded-top-4">
+            <div>
+                <i class="bi bi-airplane-engines-fill me-2"></i>
+                <strong>All Flights</strong>
+            </div>
+            <span class="badge bg-light text-dark">Showing @Model.Count() records</span>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Flight Number</th>
+                        <th>Departure</th>
+                        <th>Destination</th>
+                        <th>Departure Time</th>
+                        <th>Arrival Time</th>
+                        <th>Ticket Price</th>
+                        <th>Status</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-semibold">@item.FlightNumber</td>
+                            <td>@item.Departure</td>
+                            <td>@item.Destination</td>
+                            <td>@item.DepartureTime.ToString("g")</td>
+                            <td>@item.ArrivalTime.ToString("g")</td>
+                            <td>@item.TicketPrice.ToString("C")</td>
+                            <td>
+                                @if (item.Status == "ON TIME")
+                                {
+                                    <span class="badge bg-success">ON TIME</span>
+                                }
+                                else if (item.Status == "DELAYED")
+                                {
+                                    <span class="badge bg-warning text-dark">DELAYED</span>
+                                }
+                                else if (item.Status == "CANCELLED")
+                                {
+                                    <span class="badge bg-danger">CANCELLED</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@item.Status</span>
+                                }
+                            </td>
+                           <td>
+                                    <div class="d-flex justify-content-center gap-1">
+                                        <a asp-controller="Flights" asp-action="Details" asp-route-id="@item.Id"
+                                           class="btn btn-icon btn-view rounded-2" title="View Details">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                    <a asp-controller="Flights" asp-action="Edit" asp-route-id="@item.Id"
+                                           class="btn btn-icon btn-edit rounded-2" title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                    <a asp-controller="Flights" asp-action="Delete" asp-route-id="@item.Id"
+                                           class="btn btn-icon btn-delete rounded-2" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    

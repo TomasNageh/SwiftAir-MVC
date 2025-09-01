@@ -1,0 +1,415 @@
+﻿@model SwiftAir.Models.Passenger
+
+<style>
+    .create-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .create-header {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+    }
+
+    .create-title {
+        font-size: 32px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .create-subtitle {
+        font-size: 18px;
+        opacity: 0.9;
+    }
+
+    .main-content {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .form-info-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        align-items: start;
+    }
+
+    .form-section {
+        padding-right: 15px;
+    }
+
+    .info-preview-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 400px;
+        background: #f8f9ff;
+        border-radius: 12px;
+        border: 2px solid #e8edff;
+        padding: 30px;
+    }
+
+    .mb-3 {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+        font-size: 14px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        background: white;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border: none;
+        padding: 14px 28px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.3s;
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-secondary {
+        background: #6c757d;
+        border: none;
+        padding: 14px 28px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.3s;
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-primary:hover,
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            text-decoration: none;
+            color: white;
+        }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 4px;
+        display: block;
+    }
+
+    .passenger-preview {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        margin-bottom: 20px;
+    }
+
+    .preview-header {
+        text-align: center;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid rgba(255,255,255,0.2);
+    }
+
+    .preview-icon {
+        font-size: 48px;
+        margin-bottom: 15px;
+    }
+
+    .preview-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .preview-subtitle {
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    .preview-info {
+        display: grid;
+        gap: 15px;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .info-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        opacity: 0.8;
+        font-weight: 500;
+    }
+
+    .info-value {
+        font-size: 14px;
+        font-weight: 600;
+        color: #ffffff;
+        text-align: right;
+    }
+
+    .info-placeholder {
+        color: rgba(255,255,255,0.5);
+        font-style: italic;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .stat-item {
+        background: rgba(255,255,255,0.1);
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .stat-label {
+        font-size: 12px;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+</style>
+
+<div class="create-container">
+    <div class="create-header">
+        <h1 class="create-title">Add New Passenger</h1>
+        <h4 class="create-subtitle">Register passenger details and assign to flight</h4>
+    </div>
+
+    <div class="main-content">
+        <div class="form-info-container">
+            <div class="form-section">
+                <form method="post" asp-controller="Passengers" asp-action="AddNew">
+                    <div class="text-danger" asp-validation-summary="All"></div>
+
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(p => p.FullName)</label>
+                        <input type="text" asp-for="FullName" class="form-control" placeholder="Enter full name" oninput="updatePreview()" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(p => p.Email)</label>
+                        <input type="email" asp-for="Email" class="form-control" placeholder="Enter email address" oninput="updatePreview()" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(p => p.PhoneNumber)</label>
+                        <input type="text" asp-for="PhoneNumber" class="form-control" placeholder="Enter phone number" oninput="updatePreview()" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(p => p.PassportNumber)</label>
+                        <input type="text" asp-for="PassportNumber" class="form-control" placeholder="Enter passport number" oninput="updatePreview()" />
+                        <span asp-validation-for="PassportNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">@Html.DisplayNameFor(p => p.DateOfBirth)</label>
+                        <input type="date" asp-for="DateOfBirth" class="form-control" oninput="updatePreview()" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Select Flight</label>
+                        <select class="form-control"
+                                asp-for="FlightId"
+                                asp-items="ViewBag.FlightsSelectList"
+                                onchange="updatePreview()">
+                            <option value="">-- Select a Flight --</option>
+                        </select>
+                        <span asp-validation-for="FlightId" class="text-danger"></span>
+                    </div>
+
+                    <div style="margin-top: 25px;">
+                        <button type="submit" class="btn btn-primary">Add Passenger</button>
+                        <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+                    </div>
+                </form>
+            </div>
+
+            <div class="info-preview-section">
+                <div class="passenger-preview">
+                    <div class="preview-header">
+                        <div class="preview-icon">👤</div>
+                        <div class="preview-title">Passenger Preview</div>
+                       
+                    </div>
+
+                    <div class="preview-info">
+                        <div class="info-row">
+                            <span class="info-label">Full Name</span>
+                            <span class="info-value" id="previewName">
+                                <span class="info-placeholder">Not provided</span>
+                            </span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Email Address</span>
+                            <span class="info-value" id="previewEmail">
+                                <span class="info-placeholder">Not provided</span>
+                            </span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Phone Number</span>
+                            <span class="info-value" id="previewPhone">
+                                <span class="info-placeholder">Not provided</span>
+                            </span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Passport Number</span>
+                            <span class="info-value" id="previewPassport">
+                                <span class="info-placeholder">Not provided</span>
+                            </span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Date of Birth</span>
+                            <span class="info-value" id="previewDOB">
+                                <span class="info-placeholder">Not provided</span>
+                            </span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label">Assigned Flight</span>
+                            <span class="info-value" id="previewFlight">
+                                <span class="info-placeholder">Not selected</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">✈️</div>
+                        <div class="stat-label">Ready to Fly</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">🎫</div>
+                        <div class="stat-label">Ticket Pending</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updatePreview() {
+        // Update name
+        const name = document.querySelector('[name="FullName"]').value;
+        const previewName = document.getElementById('previewName');
+        if (name.trim()) {
+            previewName.innerHTML = name;
+            previewName.classList.remove('info-placeholder');
+        } else {
+            previewName.innerHTML = '<span class="info-placeholder">Not provided</span>';
+        }
+
+        // Update email
+        const email = document.querySelector('[name="Email"]').value;
+        const previewEmail = document.getElementById('previewEmail');
+        if (email.trim()) {
+            previewEmail.innerHTML = email;
+            previewEmail.classList.remove('info-placeholder');
+        } else {
+            previewEmail.innerHTML = '<span class="info-placeholder">Not provided</span>';
+        }
+
+        // Update phone
+        const phone = document.querySelector('[name="PhoneNumber"]').value;
+        const previewPhone = document.getElementById('previewPhone');
+        if (phone.trim()) {
+            previewPhone.innerHTML = phone;
+            previewPhone.classList.remove('info-placeholder');
+        } else {
+            previewPhone.innerHTML = '<span class="info-placeholder">Not provided</span>';
+        }
+
+        // Update passport
+        const passport = document.querySelector('[name="PassportNumber"]').value;
+        const previewPassport = document.getElementById('previewPassport');
+        if (passport.trim()) {
+            previewPassport.innerHTML = passport;
+            previewPassport.classList.remove('info-placeholder');
+        } else {
+            previewPassport.innerHTML = '<span class="info-placeholder">Not provided</span>';
+        }
+
+        // Update date of birth
+        const dob = document.querySelector('[name="DateOfBirth"]').value;
+        const previewDOB = document.getElementById('previewDOB');
+        if (dob) {
+            const date = new Date(dob);
+            previewDOB.innerHTML = date.toLocaleDateString();
+            previewDOB.classList.remove('info-placeholder');
+        } else {
+            previewDOB.innerHTML = '<span class="info-placeholder">Not provided</span>';
+        }
+
+        // Update flight
+        const flightSelect = document.querySelector('[name="FlightId"]');
+        const previewFlight = document.getElementById('previewFlight');
+        if (flightSelect.value) {
+            const selectedText = flightSelect.options[flightSelect.selectedIndex].text;
+            previewFlight.innerHTML = selectedText;
+            previewFlight.classList.remove('info-placeholder');
+        } else {
+            previewFlight.innerHTML = '<span class="info-placeholder">Not selected</span>';
+        }
+    }
+</script>

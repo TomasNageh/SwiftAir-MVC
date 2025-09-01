@@ -1,0 +1,264 @@
+﻿@model SwiftAir.Models.Flight
+@{
+    ViewData["Title"] = "Create";
+}
+
+<style>
+    .create-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .create-header {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+    }
+
+    .create-title {
+        font-size: 32px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .create-subtitle {
+        font-size: 18px;
+        opacity: 0.9;
+    }
+
+    .main-content {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .form-image-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        align-items: start;
+    }
+
+    .form-section {
+        padding-right: 15px;
+    }
+
+    .image-preview-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        background: #f8f9ff;
+        border-radius: 12px;
+        border: 2px dashed #667eea;
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+        font-size: 14px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        background: white;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border: none;
+        padding: 14px 28px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: transform 0.2s, box-shadow 0.3s;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+    #TicketImage {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        transition: transform 0.3s;
+    }
+
+        #TicketImage:hover {
+            transform: scale(1.02);
+        }
+
+    .image-placeholder {
+        text-align: center;
+        color: #666;
+    }
+
+    .placeholder-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+        opacity: 0.5;
+    }
+
+    .placeholder-text {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .placeholder-subtext {
+        font-size: 14px;
+        color: #999;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 10px 20px;
+        background: rgba(102, 126, 234, 0.1);
+        border-radius: 8px;
+        transition: background-color 0.3s;
+    }
+
+        .back-link:hover {
+            background: rgba(102, 126, 234, 0.2);
+            text-decoration: none;
+            color: #667eea;
+        }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 4px;
+        display: block;
+    }
+
+    }
+</style>
+
+<div class="create-container">
+    <div class="create-header">
+        <h1 class="create-title">Create New Flight</h1>
+        <h4 class="create-subtitle">Add flight details and upload ticket image</h4>
+    </div>
+
+    <div class="main-content">
+        <div class="form-image-container">
+            <div class="form-section">
+                <form asp-controller="Flights" asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="FlightNumber" class="form-label"></label>
+                        <input asp-for="FlightNumber" class="form-control" />
+                        <span asp-validation-for="FlightNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Departure" class="form-label"></label>
+                        <input asp-for="Departure" class="form-control" />
+                        <span asp-validation-for="Departure" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Destination" class="form-label"></label>
+                        <input asp-for="Destination" class="form-control" />
+                        <span asp-validation-for="Destination" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="DepartureTime" class="form-label"></label>
+                        <input asp-for="DepartureTime" class="form-control" />
+                        <span asp-validation-for="DepartureTime" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ArrivalTime" class="form-label"></label>
+                        <input asp-for="ArrivalTime" class="form-control" />
+                        <span asp-validation-for="ArrivalTime" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="TicketPrice" class="form-label"></label>
+                        <input asp-for="TicketPrice" class="form-control" />
+                        <span asp-validation-for="TicketPrice" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Status" class="form-label"></label>
+                        <input asp-for="Status" class="form-control" />
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">@Html.DisplayNameFor(f => f.ImageFile)</label>
+                        <input type="file" asp-for="ImageFile" accept=".png, .jpg" class="form-control" id="imageFile" onchange="AddImage()" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create Flight" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+
+            <div class="image-preview-section">
+                <img src="" id="TicketImage" style="display: none; max-width: 100%; height: auto;" />
+                <div class="image-placeholder" id="imagePlaceholder">
+                    <div class="placeholder-icon">🎫</div>
+                    <div class="placeholder-text">Ticket Preview</div>
+                    <div class="placeholder-subtext">Upload an image to see preview</div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index" class="back-link">← Back to List</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+
+        function AddImage(){
+           const file = document.getElementById("imageFile").files[0];
+document.getElementById("TicketImage").src = file ? window.URL.createObjectURL(file) : "";
+document.getElementById("TicketImage").style.display = file ? "block" : "none";
+document.getElementById("imagePlaceholder").style.display = file ? "none" : "block";
+
+        }
+    </script>
+}

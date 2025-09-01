@@ -1,0 +1,265 @@
+﻿@model IEnumerable<SwiftAir.Models.Passenger>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #c9d6ff 0%, #e2e2e2 100%);
+        min-height: 100vh;
+    }
+
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .gradient-primary {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);  /* bright sky blue */
+    }
+
+    .gradient-success {
+        background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);   /* teal to deep blue */
+    }
+
+    .gradient-dark {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);   /*  evening sky */
+    }
+
+    .status-on-time {
+        background: #e0f7fa !important;                                    /* light cyan */
+        color: #006064 !important;                                         /* deep teal */
+    }
+
+    .status-delayed {
+        background: #fff3cd !important;                                   /* light yellow */
+        color: #856404 !important;                                        /* gold-brown */
+    }
+
+    .status-cancelled {
+        background: #ffebee !important;                                     /* light  pink */
+        color: #b71c1c !important;                                           /* dark red */
+    }
+
+    .btn-icon {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* View button - light sky  tones */
+    .btn-view {
+        background: #e1f5fe;
+        color: #0277bd;
+        border-color: #e1f5fe;
+    }
+
+        .btn-view:hover {
+            background: #b3e5fc;
+            color: #01579b;
+            border-color: #b3e5fc;
+        }
+
+    /* Edit button    - soft golden sunset */
+    .btn-edit {
+        background: #fff8e1;
+        color: #ff8f00;
+        border-color: #fff8e1;
+    }
+
+        .btn-edit:hover {
+            background: #ffecb3;
+            color: #e65100;
+            border-color: #ffecb3;
+        }
+
+    /*   Delete button - strong red warning */
+    .btn-delete {
+        background: #ffebee;
+        color: #c62828;
+        border-color: #ffebee;
+    }
+
+        .btn-delete:hover {
+            background: #ffcdd2;
+            color: #b71c1c;
+            border-color: #ffcdd2;
+        }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+
+    .search-icon-wrapper {
+        position: relative;
+    }
+
+        .search-icon-wrapper .bi-search {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            z-index: 5;
+        }
+
+    .search-with-icon {
+        padding-left: 48px !important;
+    }
+
+
+</style>
+
+<div class="container-fluid" style="max-width: 1400px;">
+    <!-- HEADER-->
+    <div class="glass-effect rounded-4 p-4 mb-4 shadow ">
+        <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-people-fill text-primary fs-2 me-3"></i>
+            <h1 class="h2 fw-bold text-dark mb-0">Passengers Management</h1>
+        </div>
+        <p class="text-muted fs-5 mb-0">Manage passenger records, bookings and contact details</p>
+    </div>
+
+    <!-- Actions Bar -->
+    <div class="row mb-4">
+        <!-- Search Section -->
+        <div class="col-lg-8 mb-3 mb-lg-0">
+            <div class="glass-effect rounded-3 p-3 shadow">
+                <form method="get" asp-controller="Passengers" asp-action="Index" class="row g-3 align-items-center">
+                    <div class="col-md-8">
+                        <div class="search-icon-wrapper">
+                            <i class="bi bi-search"></i>
+                            <input type="text" name="search" value="@ViewBag.CurrentSearch"
+                                   class="form-control form-control-lg search-with-icon rounded-3"
+                                   placeholder="Search by name, email, passport or flight..." />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary btn-lg w-100 rounded-3 fw-semibold gradient-primary border-0">
+                            <i class="bi bi-funnel me-2"></i>Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="col-lg-4">
+            <div class="d-flex gap-2">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-light btn-lg flex-fill rounded-3 fw-semibold">
+                    <i class="bi bi-house-door me-2"></i>Dashboard
+                </a>
+                <a asp-controller="Passengers" asp-action="Create" class="btn btn-success btn-lg flex-fill rounded-3 fw-semibold gradient-success border-0">
+                    <i class="bi bi-person-plus me-2"></i>Add Passenger
+                </a>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Any())
+    {
+        <!--TABLE-->
+        <div class="glass-effect rounded-4 overflow-hidden shadow animate-fade-in">
+            <!-- Table  Head -->
+            <div class="gradient-dark text-white p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-list-check me-2"></i>
+                        <span class="fw-semibold">All Passengers</span>
+                    </div>
+                    <span class="badge bg-light bg-opacity-25 rounded-pill px-3 py-2">
+                        Showing @Model.Count() records
+                    </span>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="fw-semibold text-uppercase small text-muted border-0">ID</th>
+                            <th class="fw-semibold text-uppercase small text-muted border-0">@Html.DisplayNameFor(p => p.FullName)</th>
+                            <th class="fw-semibold text-uppercase small text-muted border-0">@Html.DisplayNameFor(p => p.Email)</th>
+                            <th class="fw-semibold text-uppercase small text-muted border-0">@Html.DisplayNameFor(p => p.PhoneNumber)</th>
+                            <th class="fw-semibold text-uppercase small text-muted border-0">@Html.DisplayNameFor(p => p.PassportNumber)</th>
+                            <th class="fw-semibold text-uppercase small text-muted border-0">Flight Status</th>
+                            <th class="fw-semibold text-uppercase small text-muted border-0 text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Passenger passenger in Model)
+                        {
+                            <tr class="align-middle">
+                                <td class="fw-bold">@passenger.PassengerId</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="fw-semibold text-dark">@passenger.FullName</span>
+                                    </div>
+                                </td>
+                                <td>@passenger.Email</td>
+                                <td><code class="bg-light text-dark px-2 py-1 rounded">@passenger.PhoneNumber</code></td>
+                                <td><code class="bg-light text-dark px-2 py-1 rounded">@passenger.PassportNumber</code></td>
+                                <td>
+                                    @if (passenger.Flight != null)
+                                    {
+                                        var status = "status-on-time";
+                                        if (passenger.Flight.Status?.ToLower().Contains("delayed") == true)
+                                        {
+                                            status= "status-delayed";
+                                        }
+                                        else if (passenger.Flight.Status?.ToLower().Contains("cancelled") == true)
+                                        {
+                                            status = "status-cancelled";
+                                        }
+                                        <span class="badge @status rounded-pill px-3 py-2 fw-semibold text-uppercase small">@passenger.Flight.Status</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-light text-muted rounded-pill px-3 py-2 fw-semibold text-uppercase small">No Flight</span>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center gap-1">
+                                        <a asp-controller="Passengers" asp-action="Details" asp-route-id="@passenger.PassengerId"
+                                           class="btn btn-icon btn-view rounded-2" title="View Details">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a asp-controller="Passengers" asp-action="Edit" asp-route-id="@passenger.PassengerId"
+                                           class="btn btn-icon btn-edit rounded-2" title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a asp-controller="Passengers" asp-action="Delete" asp-route-id="@passenger.PassengerId"
+                                           class="btn btn-icon btn-delete rounded-2" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!--No Passengers -->
+        <div class="glass-effect rounded-4 p-5 text-center shadow animate-fade-in">
+            <h5 class="text-dark mb-3">No passengers found</h5>
+            <p class="text-muted mb-4">Try adding a passenger or adjust your search filters.</p>
+            <a asp-controller="Passengers" asp-action="Create" class="btn btn-success btn-lg rounded-3 fw-semibold gradient-success border-0">
+                <i class="bi bi-person-plus me-2"></i> Add Passenger
+            </a>
+        </div>
+    }
+
+    <!------------------------Footer ---------------------------->
+    <div class="glass-effect rounded-3 p-3 text-center mt-4" style="background: rgba(255, 255, 255, 0.1);">
+        <p class="text-dark mb-0 opacity-75">&copy; 2025 SwiftAir • Last updated: @DateTime.Now.ToString("dd MMM yyyy HH:mm")</p>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+﻿@model SwiftAir.Models.Passenger
+
+<div class="row">
+    <form class="col-6" method="post" asp-controller="Passengers" asp-action="EditCurrent">
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <input type="hidden" asp-for = "PassengerId"> 
+        <div class="mb-3">
+            <label class="form-label">@Html.DisplayNameFor(p => p.FullName)</label>
+            <input type="text" asp-for="FullName" class="form-control" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Html.DisplayNameFor(p => p.Email)</label>
+            <input type="email" asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Html.DisplayNameFor(p => p.PhoneNumber)</label>
+            <input type="text" asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Html.DisplayNameFor(p => p.PassportNumber)</label>
+            <input type="text" asp-for="PassportNumber" class="form-control" />
+            <span asp-validation-for="PassportNumber" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Html.DisplayNameFor(p => p.DateOfBirth)</label>
+            <input type="date" asp-for="DateOfBirth" class="form-control" />
+            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+        </div>
+
+        <!-- ADD New Flight-->
+        <div class="mb-3">
+            <label class="form-label">Select Flight</label>
+            <select class="form-control"
+                    asp-for="FlightId"
+                    asp-items="ViewBag.FlightsSelectList">
+                <option value="">-- Select a Flight --</option>
+            </select>
+            <span asp-validation-for="FlightId" class="text-danger"></span>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary mt-3">Edit</button>
+        <a asp-action="Index" class="btn btn-secondary mt-3 ms-2">Back to List</a>
+    </form>
+</div>

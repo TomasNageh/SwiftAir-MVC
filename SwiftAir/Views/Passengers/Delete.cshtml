@@ -1,0 +1,77 @@
+﻿@model SwiftAir.Models.Passenger
+
+<h1 class="alert alert-danger text-center display-6 fw-bold">
+    Are You Sure You Want To Delete This Passenger?
+</h1>
+
+<div class="row">
+    <!-- Passenger Details -->
+    <div class="col-6">
+        <dl class="row">
+            <dt class="col-4">@Html.DisplayNameFor(p => p.PassengerId)</dt>
+            <dd class="col-8">@Html.DisplayFor(p => p.PassengerId)</dd>
+
+            <dt class="col-4">@Html.DisplayNameFor(p => p.FullName)</dt>
+            <dd class="col-8">@Html.DisplayFor(p => p.FullName)</dd>
+
+            <dt class="col-4">@Html.DisplayNameFor(p => p.Email)</dt>
+            <dd class="col-8">@Html.DisplayFor(p => p.Email)</dd>
+
+            <dt class="col-4">@Html.DisplayNameFor(p => p.PhoneNumber)</dt>
+            <dd class="col-8">@Html.DisplayFor(p => p.PhoneNumber)</dd>
+
+            <dt class="col-4">@Html.DisplayNameFor(p => p.PassportNumber)</dt>
+            <dd class="col-8">@Html.DisplayFor(p => p.PassportNumber)</dd>
+
+            <dt class="col-4">@Html.DisplayNameFor(p => p.DateOfBirth)</dt>
+            <dd class="col-8">@Model.DateOfBirth.ToString("dd/MM/yyyy")</dd>
+        </dl>
+    </div>
+
+    <!-- Flight Details Card -->
+    <div class="col-6">
+        <div class="card border-primary shadow-sm">
+            <div class="card-header bg-primary text-white">
+                Flight Information
+            </div>
+            <div class="card-body">
+                @if (Model.Flight != null)
+                {
+                    <dl class="row">
+                        <dt class="col-4">Flight Number</dt>
+                        <dd class="col-8">@Model.Flight.FlightNumber</dd>
+
+                        <dt class="col-4">From</dt>
+                        <dd class="col-8">@Model.Flight.Departure</dd>
+
+                        <dt class="col-4">To</dt>
+                        <dd class="col-8">@Model.Flight.Destination</dd>
+
+                        <dt class="col-4">Departure</dt>
+                        <dd class="col-8">@Model.Flight.DepartureTime.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                        <dt class="col-4">Arrival</dt>
+                        <dd class="col-8">@Model.Flight.ArrivalTime.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                        <dt class="col-4">Flight Status</dt>
+                        <dd class="col-8">@Model.Flight.Status</dd>
+
+                        <dt class="col-4">Ticket Price</dt>
+                        <dd class="col-8">$@Model.Flight.TicketPrice</dd>
+                    </dl>
+                }
+                else
+                {
+                    <p class="text-danger">No flight information available.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Form -->
+<form method="post" asp-action="DeleteCurrent">
+    <input type="hidden" name="id" value="@Model.PassengerId" />
+    <button type="submit" class="btn btn-danger mt-3">Delete</button>
+    <a asp-controller="Passengers" asp-action="Index" class="btn btn-secondary mt-3">Back To List</a>
+</form>

@@ -1,0 +1,57 @@
+﻿@model SwiftAir.Models.Passenger
+
+<h2>Passenger Details</h2>
+
+<div class="mb-4">
+    <dl class="row">
+        <dt class="col-2">Full Name</dt>
+        <dd class="col-10">@Model.FullName</dd>
+
+        <dt class="col-2">Email</dt>
+        <dd class="col-10">@Model.Email</dd>
+
+        <dt class="col-2">Phone Number</dt>
+        <dd class="col-10">@Model.PhoneNumber</dd>
+
+        <dt class="col-2">Passport Number</dt>
+        <dd class="col-10">@Model.PassportNumber</dd>
+
+        <dt class="col-2">Date of Birth</dt>
+        <dd class="col-10">@Model.DateOfBirth.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-2">Flight Status</dt>
+        <dd class="col-10">@Model.Flight.Status</dd>
+    </dl>
+</div>
+
+@if (Model.Flight != null)
+{
+    <div class="card shadow-sm border-primary">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Flight Information</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-4">Flight Number</dt>
+                <dd class="col-8">@Model.Flight.FlightNumber</dd>
+
+                <dt class="col-4">Route</dt>
+                <dd class="col-8">@Model.Flight.Departure &#8594; @Model.Flight.Destination</dd>
+
+                <dt class="col-4">Departure Time</dt>
+                <dd class="col-8">@Model.Flight.DepartureTime.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                <dt class="col-4">Arrival Time</dt>
+                <dd class="col-8">@Model.Flight.ArrivalTime.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                <dt class="col-4">Flight Status</dt>
+                <dd class="col-8">@Model.Flight.Status</dd>
+
+                <dt class="col-4">Ticket Price</dt>
+                <dd class="col-8">@Model.Flight.TicketPrice.ToString("C")</dd>
+            </dl>
+        </div>
+    </div>
+}
+
+<a class="btn btn-secondary mt-3" asp-action="Index">Back to List</a>
