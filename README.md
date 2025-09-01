@@ -21,7 +21,8 @@ The system is designed to streamline **flight operations, passenger management, 
 ---
 
 ## 📖 Documentation  
-A **System User Guide (Version 1.0)** was prepared to explain the system’s functionality and usage.  
+For detailed system usage and features, check out the  
+[SwiftAir Airline Management System – User Guide (PDF)](./swiftair_airline_management_system_Tomas_Nageh.pdf)
 
 ---
 
