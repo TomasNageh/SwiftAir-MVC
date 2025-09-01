@@ -1,7 +1,7 @@
 # ✈️ SwiftAir – Airline Management System  
 
 ## 📌 Overview  
-SwiftAir is a **web-based airline management system** developed as the final project of the **ITI Summer Code Camp (Web Development Using .NET Track)** at Helwan University Branch.  
+SwiftAir is a **web-based airline management system** developed as the final project of the **ITI Summer Code Camp (Web Development Using .NET Track)**.  
 The system is designed to streamline **flight operations, passenger management, and boarding processes** with a user-friendly interface.  
 
 ---
